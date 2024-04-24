@@ -1,0 +1,40 @@
+#########  Stage 1  ##########
+Download SBD dataset from http://home.bharathh.info/pubs/codes/SBD/download.html; then extract the dataset directory to current directory.
+
+python S0_load_mat.py
+
+which will convert the original mat file to the desired format for remaining stages.
+#########  Stage 1  ##########
+
+# degrade to original method by setting max_depth = 0 and mode = ese_ori
+python main.py --stage encoding --mode hierarchy_encoding --datalist train --max_depth 0 --process_mode ese_ori --save
+
+# for coco
+python main.py --stage encoding --mode hierarchy_encoding --dataset coco --datalist train --max_depth 0 --process_mode ese_ori --save
+
+# Our method
+python main.py --stage encoding --mode hierarchy_encoding --datalist train --max_depth 5 --process_mode hybrid --save
+
+
+#########  Stage 2  ##########
+
+# original methd + svd
+python main.py --stage factorization --mode hierarchy_encoding --datalist train --max_depth 0 --process_mode ese_ori --save
+
+# Our method + svd
+python main.py --stage factorization --mode hierarchy_encoding --datalist train --max_depth 5 --process_mode hybrid --save
+
+# Our method + fms
+python main.py --stage factorization --mode hierarchy_encoding --datalist train --max_depth 5 --process_mode hybrid --fms --dim 50 --save
+
+
+#########  Stage 3  ##########
+
+# original methd
+python main.py --stage convert --mode hierarchy_encoding --datalist train --max_depth 0 --process_mode ese_ori --save --dim 8
+
+# Our method
+python main.py --stage convert --mode hierarchy_encoding --datalist train --max_depth 5 --process_mode hybrid --save --dim 8
+
+# Our method with fms
+python main.py --stage convert --mode hierarchy_encoding --datalist train --max_depth 5 --process_mode hybrid --save --method fms --dim 8
