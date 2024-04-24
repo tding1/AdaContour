@@ -8,9 +8,6 @@ Untitled*
 darknet53_result*
 *.pth
 bs_*
-*.jpg
-*.png
-*.mp4
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
