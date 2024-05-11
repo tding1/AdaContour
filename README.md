@@ -54,11 +54,48 @@ Done!All results saved in output/
 =================================================================
 ~~~
 
-## Encoding and Training Pipeline
+## Pipeline: Encoding, Factorization, and Convert
 
-Please follow [dnjs3594/Eigencontours](https://github.com/dnjs3594/Eigencontours) for dataset preparation first.
+Here, we use the sample data in `sample_data` as an example for the pipeline.
 
-For the rest of the pipeline and usage, please refer to `cmds.txt`.
+### Step 1. Encoding
+
+~~~
+python main.py --stage encoding --mode hierarchy_encoding --datalist demo --dataset demo  --max_depth 5 --process_mode hybrid --save --display
+~~~
+
+The encoded information is saved as a h5 file in the `output` folder. With `--display`, you can see the visualizations for (RGB, GT mask, AdaContour encoded mask), such as:
+
+<p align="center">
+<img src="assets/encoding_display.png" />
+</p>
+
+
+### Step 2. Factorization
+
+~~~
+python main.py --stage factorization --mode hierarchy_encoding --datalist demo --dataset demo --max_depth 5 --process_mode hybrid --fms --dim 50 --save
+~~~
+
+Use `dim` to set the dimension of the low-rank subspace. It will save the original matrix and the low-rank matrix in the `output` folder. Here we use FMS instead of SVD, which is a more robust method to compute the shared basis.
+
+
+### Step 3. Convert
+
+~~~
+python main.py --stage convert --mode hierarchy_encoding --datalist demo --dataset demo --max_depth 5 --process_mode hybrid --save --method fms --dim 50 --display
+~~~
+
+Use the shared basis to reconstruct the visualizations for (RGB, AdaContour reconstructed mask, GT w/ mask), such as:
+
+<p align="center">
+<img src="assets/convert_display.jpg" />
+</p>
+
+---
+
+For other datasets, like COCO and SBD, please follow [dnjs3594/Eigencontours](https://github.com/dnjs3594/Eigencontours) for dataset preparation.
+
 
 ## Citation
 

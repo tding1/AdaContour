@@ -19,6 +19,8 @@ class Config(object):
             self.img_dir = self.head_path + "Preprocessing/data/coco/{}2017/".format(
                 self.datalist
             )
+        elif self.dataset == "demo":
+            self.img_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "sample_data/")
 
         self.label_path_seg = "{}_seg.txt".format(self.datalist)
         self.label_path_bb = "{}_bb.txt".format(self.datalist)
@@ -26,7 +28,7 @@ class Config(object):
         self.node_num = args.node_num
 
         self.output_dir = (
-            self.head_path
+            self.head_path if self.dataset != "demo" else os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "output/")
             + "output_"
             + self.dataset
             + "_"
@@ -45,7 +47,7 @@ class Config(object):
 
         if args.val_U:
             self.U_dir = (
-                self.head_path
+                self.head_path if self.dataset != "demo" else os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "output/")
                 + "output_"
                 + self.dataset
                 + "_val"
@@ -66,6 +68,22 @@ class Config(object):
                 + "output_"
                 + self.dataset
                 + "_train"
+                + "_v1_node_{}".format(self.node_num)
+                + "_iouth_"
+                + str(args.thresd_iou)
+                + "_mode_"
+                + args.mode
+                + "_D_"
+                + str(args.max_depth)
+                + "_center_"
+                + args.process_mode
+                + "/"
+            )
+
+        if self.dataset == "demo":
+            self.U_dir = (
+                self.head_path if self.dataset != "demo" else os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "output/")
+                + "output_demo_demo"
                 + "_v1_node_{}".format(self.node_num)
                 + "_iouth_"
                 + str(args.thresd_iou)
