@@ -1,5 +1,6 @@
 from datasets.dataset_coco_not_crop import *
 from datasets.dataset_sbd_not_crop import *
+from datasets.dataset_demo import *
 from visualizes.visualize import Visualize
 
 
@@ -8,6 +9,8 @@ def prepare_dataloader(cfg, dict_DB):
         dataset = Dataset_coco(cfg=cfg, datalist=cfg.datalist)
     elif cfg.dataset == "sbd":
         dataset = SBD(cfg=cfg, datalist=cfg.datalist)
+    elif cfg.dataset == "demo":
+        dataset = Dataset_demo(cfg=cfg, datalist=cfg.datalist)
     dataloader = torch.utils.data.DataLoader(
         dataset=dataset,
         batch_size=cfg.batch_size,

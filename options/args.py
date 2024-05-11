@@ -25,7 +25,7 @@ def parse_args():
     parser.add_argument("--fms", action="store_true", help="using FMS instead of SVD")
     parser.add_argument("--save", action="store_true", help="save file")
     parser.add_argument(
-        "--dataset", default="sbd", type=str, choices=["coco", "sbd"], help="dataset"
+        "--dataset", default="sbd", type=str, choices=["coco", "sbd", "demo"], help="dataset"
     )
     parser.add_argument("--datalist", default="train", type=str, help="datalist")
     parser.add_argument("--gpu_id", default="0", type=str, help="gpu_id")
